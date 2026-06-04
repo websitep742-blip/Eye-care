@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Live Terminal & Daily Analytics | Agarwal Eye Care Centre</title>
+    
+    <!-- Premium Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        :root {
+            --brand-cyan: #00b4d8;
+            --brand-glow: rgba(0, 180, 216, 0.2);
+            --bg-deep: #0a0c14;
+            --bg-surface: #121624;
+            --text-pure: #ffffff;
+            --text-muted: #64748b;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+        }
+        
+        body { background-color: var(--bg-deep); color: var(--text-pure); min-height: 100vh; overflow-x: hidden; }
+        header { background: #0b0d14; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .logo-box { display: flex; align-items: center; gap: 12px; }
+        .logo-box i { font-size: 26px; color: var(--brand-cyan); }
+        .logo-box h2 { font-size: 18px; font-weight: 800; }
+        .logo-box span { font-size: 11px; color: var(--text-muted); display: block; text-transform: uppercase; }
+        
+        /* BUSINESS ANALYTICS CONTAINER */
+        .analytics-container { max-width: 1300px; margin: 30px auto 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .stat-card { background: var(--bg-surface); border-radius: 20px; padding: 22px 25px; border: 1px solid rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .stat-info span { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-info h3 { font-size: 28px; font-weight: 800; margin-top: 4px; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
+        .icon-blue { background: rgba(0, 180, 216, 0.1); color: var(--brand-cyan); border: 1px solid rgba(0, 180, 216, 0.15); }
+        .icon-orange { background: rgba(245, 158, 11, 0.1); color: var(--warning-amber); border: 1px solid rgba(245, 158, 11, 0.15); }
+        .icon-green { background: rgba(16, 185, 129, 0.1); color: var(--success-green); border: 1px solid rgba(16, 185, 129, 0.15); }
+
+        .console-container { max-width: 1300px; margin: 25px auto 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 35px; }
+        .glass-card { background: var(--bg-surface); border-radius: 24px; padding: 30px; border: 1px solid rgba(255,255,255,0.02); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+        .card-title { font-size: 15px; font-weight: 700; margin-bottom: 20px; color: var(--brand-cyan); display: flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .status-control-card { background: linear-gradient(135deg, #161013 0%, #0f0a0c 100%); border: 1px dashed rgba(239, 68, 68, 0.25); margin-bottom: 25px; }
+        .switch-wrapper { display: flex; align-items: center; gap: 15px; cursor: pointer; background: rgba(0,0,0,0.2); padding: 15px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
+        .switch-wrapper input { width: 22px; height: 22px; accent-color: var(--success-green); }
+        .switch-text { font-size: 14px; font-weight: 700; color: var(--success-green); }
+
+        .monitor-display { background: #090b12; border-radius: 20px; padding: 35px 20px; text-align: center; border: 1px solid rgba(0, 180, 216, 0.15); }
+        .big-token-num { font-size: 84px; font-weight: 800; color: var(--brand-cyan); line-height: 1; margin: 12px 0; }
+        .patient-label { font-size: 16px; font-weight: 600; }
+        
+        .console-buttons { display: flex; gap: 15px; margin-top: 25px; }
+        .btn { padding: 16px 24px; border-radius: 14px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-call { background: var(--success-green); color: #fff; flex: 1; }
+        .btn-hold { background: rgba(239, 68, 68, 0.12); color: var(--danger-red); width: 130px; border: 1px solid rgba(239, 68, 68, 0.2); }
+        
+        .hold-board-tray { background: rgba(245, 158, 11, 0.03); border: 1px dashed rgba(245, 158, 11, 0.18); padding: 20px; border-radius: 18px; margin-top: 25px; }
+        .hold-tray-title { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--warning-amber); margin-bottom: 12px; }
+        .hold-badges-flex { display: flex; flex-wrap: wrap; gap: 10px; }
+        .hold-item-badge { background: #17130e; border: 1px solid rgba(245, 158, 11, 0.15); padding: 8px 14px; border-radius: 10px; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+        .btn-recall { background: rgba(245, 158, 11, 0.15); border: none; color: var(--warning-amber); font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 6px; cursor: pointer; }
+        
+        .queue-table { width: 100%; border-collapse: collapse; }
+        .queue-table th, .queue-table td { padding: 16px; text-align: left; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .queue-table th { color: var(--brand-cyan); background: #0b0d14; border-radius: 8px; font-size: 12px; }
+        .status-badge-waiting { color: var(--warning-amber); background: rgba(245, 158, 11, 0.08); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        
+        .unblock-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #07080d; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .unblock-box { text-align: center; background: var(--bg-surface); padding: 40px; border-radius: 28px; max-width: 400px; width: 90%; border: 1px solid rgba(0,180,216,0.15); }
+        .btn-init { background: var(--brand-cyan); color: #000; width: 100%; padding: 15px; border-radius: 12px; font-size: 15px; font-weight: 800; border: none; cursor: pointer; margin-top: 20px; }
+
+        /* ==========================================================================
+           5. MOBILE COMPACT BREAKPOINT RE-STYLING ENGINE
+           ========================================================================== */
+        @media (max-width: 768px) {
+            header { padding: 15px; }
+            .logo-box h2 { font-size: 16px; }
+
+            /* Grid metrics adjusted horizontally into a neat 2-column flow */
+            .analytics-container { 
+                grid-template-columns: repeat(2, 1fr) !important; 
+                gap: 12px !important; 
+                margin: 15px auto 0 auto;
+                padding: 0 15px;
+            }
+            .stat-card { padding: 14px 18px !important; border-radius: 16px; }
+            /* Making the income card block span across full width for aesthetic balance */
+            .stat-card:nth-child(3) { grid-column: span 2; } 
+            .stat-info h3 { font-size: 22px !important; }
+            .stat-icon { width: 40px; height: 40px; font-size: 16px; }
+
+            .console-container { 
+                grid-template-columns: 1fr !important; 
+                gap: 20px !important; 
+                margin-top: 15px;
+                padding: 0 15px;
+            }
+            .glass-card { padding: 20px !important; border-radius: 20px; }
+            .big-token-num { font-size: 64px !important; }
+            .btn { padding: 14px 18px !important; font-size: 13px !important; }
+            .btn-hold { width: 100px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- OVERLAY SECURITY LOCK SCREEN -->
+    <div id="sound-safety-overlay" class="unblock-overlay">
+        <div class="unblock-box">
+            <i class="fas fa-stethoscope" style="font-size: 45px; color: var(--brand-cyan); margin-bottom: 15px; display: block;"></i>
+            <h3 style="color: #fff; font-weight: 700; margin-bottom: 6px;">Dr. Pradumn Agarwal</h3>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">Click below to close the previous shift and initialize a fresh, zero-memory live tracking console for today.</p>
+            <button id="initialize-console-btn" class="btn-init">Open Today's Console (Reset All)</button>
+        </div>
+    </div>
+
+    <audio id="clinic-bell-buzzer" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" preload="auto"></audio>
+
+    <header>
+        <div class="logo-box">
+            <i class="fas fa-desktop"></i>
+            <div><h2>Agarwal Eye Care Centre</h2><p>Doctor Live Control Desk</p></div>
+        </div>
+    </header>
+
+    <!-- DYNAMIC DAILY ANALYTICS METRICS -->
+    <div class="analytics-container">
+        <div class="stat-card">
+            <div class="stat-info"><span>Today's Appointments</span><h3 id="stat-total-issued">00</h3></div>
+            <div class="stat-icon icon-blue"><i class="fas fa-ticket-alt"></i></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info"><span>Today's Checked Patients</span><h3 id="stat-total-checked">00</h3></div>
+            <div class="stat-icon icon-orange"><i class="fas fa-user-check"></i></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info"><span>Today's Earning (Collection)</span><h3 id="stat-total-revenue" style="color: var(--success-green);">₹0</h3></div>
+            <div class="stat-icon icon-green"><i class="fas fa-indian-rupee-sign"></i></div>
+        </div>
+    </div>
+
+    <div class="console-container">
+        <div>
+            <div class="glass-card status-control-card">
+                <div class="card-title" style="color: var(--danger-red);"><i class="fas fa-power-off"></i> Clinic Status Trigger</div>
+                <label class="switch-wrapper">
+                    <input type="checkbox" id="clinic-availability-checkbox" checked>
+                    <span id="switch-status-label" class="switch-text">Doctor Is AVAILABLE Today (Clinic Open)</span>
+                </label>
+            </div>
+
+            <div class="glass-card">
+                <div class="card-title"><i class="fas fa-door-open"></i> Inside Doctor Room</div>
+                <div class="monitor-display">
+                    <span>Now Consulting ID</span>
+                    <div id="room-active-token" class="big-token-num">#--</div>
+                    <div id="room-active-name" class="patient-label">No Patient Inside Room</div>
+                </div>
+                <div class="console-buttons">
+                    <button id="skip-hold-btn" class="btn btn-hold"><i class="fas fa-pause"></i> Skip/Hold</button>
+                    <button id="call-next-btn" class="btn btn-call"><i class="fas fa-volume-up"></i> Call Next Patient</button>
+                </div>
+            </div>
+
+            <div class="hold-board-tray">
+                <div class="hold-tray-title"><i class="fas fa-user-clock"></i> On-Hold Tray</div>
+                <div class="hold-badges-flex" id="hold-tray-wrapper"></div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-title"><i class="fas fa-list-ol"></i> Next In-Line Waiting Queue</div>
+            <table class="queue-table" id="waiting-line-table">
+                <thead><tr><th>Appointment No</th><th>Patient Name</th><th>Status</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+   <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const initBtn = document.getElementById("initialize-console-btn");
+            const shieldOverlay = document.getElementById("sound-safety-overlay");
+            const buzzerTrack = document.getElementById("clinic-bell-buzzer");
+
+            let waitingLine = [];
+            let holdLine = [];
+            let activeConsultation = null;
+            let checkedPatientsCount = 0;
+            const consultationFeeValue = 500;
+
+            localStorage.setItem("doctorClinicStatus", "OPEN");
+
+            if(initBtn && shieldOverlay) {
+                initBtn.addEventListener("click", () => {
+                    buzzerTrack.volume = 0.1;
+                    buzzerTrack.play().then(() => {
+                        buzzerTrack.pause();
+                        buzzerTrack.currentTime = 0;
+                        buzzerTrack.volume = 1.0; 
+                        shieldOverlay.style.display = "none";
+                        
+                        localStorage.setItem("demoPatientQueue", JSON.stringify([]));
+                        localStorage.setItem("backendTotalIssued", "0");
+                        localStorage.setItem("doctorActiveToken", "#--");
+                        
+                        waitingLine = [];
+                        holdLine = [];
+                        activeConsultation = null;
+                        totalTokensIssuedCount = 0;
+                        checkedPatientsCount = 0;
+
+                        startSyncEngine();
+                    }).catch(() => {
+                        shieldOverlay.style.display = "none";
+                        startSyncEngine();
+                    });
+                });
+            }
+
+            function triggerClinicBuzzer() {
+                buzzerTrack.currentTime = 0;
+                buzzerTrack.play().catch(() => {});
+            }
+
+            function startSyncEngine() {
+                setInterval(() => {
+                    let sharedQueue = JSON.parse(localStorage.getItem("demoPatientQueue")) || [];
+                    
+                    if (sharedQueue.length > 0) {
+                        if (!activeConsultation && waitingLine.length === 0) {
+                            activeConsultation = sharedQueue.shift();
+                            triggerClinicBuzzer();
+                        }
+                        if (sharedQueue.length > 0) {
+                            waitingLine = waitingLine.concat(sharedQueue);
+                        }
+                        localStorage.setItem("demoPatientQueue", JSON.stringify([]));
+                    }
+                    
+                    let totalTokensIssuedCount = parseInt(localStorage.getItem("backendTotalIssued") || "0");
+                    
+                    if (!activeConsultation && waitingLine.length === 0 && holdLine.length === 0) {
+                        localStorage.setItem("backendTotalIssued", "0");
+                        totalTokensIssuedCount = 0;
+                    }
+                    
+                    document.getElementById("stat-total-issued").innerText = totalTokensIssuedCount < 10 ? `0${totalTokensIssuedCount}` : totalTokensIssuedCount;
+                    document.getElementById("stat-total-checked").innerText = checkedPatientsCount < 10 ? `0${checkedPatientsCount}` : checkedPatientsCount;
+                    document.getElementById("stat-total-revenue").innerText = `₹${checkedPatientsCount * consultationFeeValue}`;
+                    
+                    renderConsoleDashboard();
+                }, 1000);
+            }
+
+            function renderConsoleDashboard() {
+                const screenToken = document.getElementById("room-active-token");
+                const screenName = document.getElementById("room-active-name");
+
+                if(activeConsultation) {
+                    screenToken.innerText = activeConsultation.token;
+                    screenName.innerHTML = `<strong>Patient:</strong> ${activeConsultation.name}`;
+                    localStorage.setItem("doctorActiveToken", activeConsultation.token);
+                } else {
+                    screenToken.innerText = "#--";
+                    screenName.innerText = "No Patient Inside Room";
+                    localStorage.setItem("doctorActiveToken", "#--");
+                }
+
+                const tableBody = document.getElementById("waiting-line-table").getElementsByTagName('tbody')[0];
+                tableBody.innerHTML = "";
+
+                if(waitingLine.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:30px 10px;">Waiting line clear. No patients in queue.</td></tr>`;
+                } else {
+                    waitingLine.forEach(p => {
+                        let row = tableBody.insertRow();
+                        row.innerHTML = `<td><strong>${p.token}</strong></td><td>${p.name}</td><td><span class="status-badge-waiting">Waiting</span></td>`;
+                    });
+                }
+
+                const holdWrapper = document.getElementById("hold-tray-wrapper");
+                holdWrapper.innerHTML = "";
+
+                if(holdLine.length === 0) {
+                    holdWrapper.innerHTML = `<span style="font-size: 12px; color: var(--text-muted);">No patients currently on hold status.</span>`;
+                } else {
+                    holdLine.forEach((p, index) => {
+                        let badge = document.createElement("div");
+                        badge.className = "hold-item-badge";
+                        badge.innerHTML = `<strong>${p.token}</strong> ${p.name} <button class="btn-recall" data-index="${index}"><i class="fas fa-undo"></i> Recall</button>`;
+                        holdWrapper.appendChild(badge);
+                    });
+                }
+            }
+
+            document.getElementById("call-next-btn").addEventListener("click", () => {
+                if(activeConsultation) { checkedPatientsCount++; }
+                if(waitingLine.length > 0) {
+                    activeConsultation = waitingLine.shift();
+                    triggerClinicBuzzer();
+                } else {
+                    activeConsultation = null;
+                    alert("🛎️ Shift Clear! Saare registered appointments ko check kiya ja chuka hai.");
+                }
+            });
+
+            document.getElementById("skip-hold-btn").addEventListener("click", () => {
+                if(activeConsultation) {
+                    holdLine.push(activeConsultation);
+                    if(waitingLine.length > 0) {
+                        activeConsultation = waitingLine.shift();
+                        triggerClinicBuzzer();
+                    } else { activeConsultation = null; }
+                } else { alert("Room me koi active patient nahi hai."); }
+            });
+
+            document.getElementById("hold-tray-wrapper").addEventListener("click", (e) => {
+                if(e.target.classList.contains("btn-recall")) {
+                    const idx = parseInt(e.target.getAttribute("data-index"));
+                    const recalledItem = holdLine.splice(idx, 1)[0];
+                    waitingLine.push(recalledItem);
+                }
+            });
+
+            const toggleCheckbox = document.getElementById("clinic-availability-checkbox");
+            const toggleLabelText = document.getElementById("switch-status-label");
+
+            toggleCheckbox.addEventListener("change", () => {
+                if(toggleCheckbox.checked) {
+                    localStorage.setItem("doctorClinicStatus", "OPEN");
+                    toggleLabelText.innerText = "Doctor Is AVAILABLE Today (Clinic Open)";
+                    toggleLabelText.style.color = "var(--success-green)";
+                } else {
+                    localStorage.setItem("doctorClinicStatus", "CLOSED");
+                    toggleLabelText.innerText = "Doctor Is UNAVAILABLE Today (Clinic Closed)";
+                    toggleLabelText.style.color = "var(--danger-red)";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

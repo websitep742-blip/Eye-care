@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Pradumn Agarwal | Agarwal Eye Care Centre</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. MODERN RESET & PREMIUM BRAND VARIABLES
+           ========================================================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        :root {
+            --brand-cyan: #00b4d8;
+            --brand-glow: rgba(0, 180, 216, 0.25);
+            --bg-deep: #0a0c14;
+            --bg-surface: #121624;
+            --bg-surface-light: #1c2136;
+            --text-pure: #ffffff;
+            --text-body: #cbd5e1;
+            --text-muted: #64748b;
+            --neon-green: #10b981;
+            --danger-red: #ef4444;
+        }
+        
+        body { background-color: var(--bg-deep); color: var(--text-body); min-height: 100vh; overflow-x: hidden; padding-bottom: 60px; }
+
+        /* LIVE CLINIC CLOSED/OPEN TOP ALERT BANNER */
+        .clinic-status-banner { width: 100%; padding: 12px 20px; text-align: center; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .status-open-banner { background: rgba(16, 185, 129, 0.12); color: var(--neon-green); border-bottom: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-closed-banner { background: rgba(239, 68, 68, 0.15); color: var(--danger-red); border-bottom: 1px solid rgba(239, 68, 68, 0.25); }
+
+        header { background: rgba(11, 13, 20, 0.8); backdrop-filter: blur(12px); padding: 18px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.03); position: sticky; top: 0; z-index: 1000; }
+        .nav-logo { display: flex; align-items: center; gap: 14px; }
+        .nav-logo .icon-wrap { background: var(--brand-glow); width: 45px; height: 45px; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
+        .nav-logo i { font-size: 24px; color: var(--brand-cyan); }
+        .logo-text h2 { font-size: 18px; color: var(--text-pure); font-weight: 800; }
+        .logo-text p { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+
+        .hero-banner { max-width: 1200px; margin: 30px auto 0 auto; height: 350px; border-radius: 32px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
+        .hero-content { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, rgba(10,12,20,1) 20%, transparent); padding: 40px; }
+        .hero-content h1 { font-size: 36px; color: var(--text-pure); font-weight: 800; }
+        .hero-content p { font-size: 15px; color: var(--brand-cyan); font-weight: 600; margin-top: 5px; }
+
+        .main-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 30px; }
+        .glass-card { background: var(--bg-surface); border-radius: 24px; padding: 35px; border: 1px solid rgba(255,255,255,0.02); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+        .card-title { font-size: 18px; color: var(--text-pure); font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 12px; }
+        .card-title i { color: var(--brand-cyan); }
+
+        /* THE ATTRACTION REDIRECT BUTTON */
+        .redirect-btn-container { text-align: center; margin: 10px 0; }
+        .action-redirect-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 15px; 
+            background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); 
+            color: #000; 
+            padding: 22px 50px; 
+            border-radius: 20px; 
+            font-size: 18px; 
+            font-weight: 800; 
+            text-decoration: none; 
+            box-shadow: 0 12px 35px rgba(0, 180, 216, 0.35); 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .action-redirect-btn.disabled-btn {
+            background: #222636 !important;
+            color: #4b5563 !important;
+            box-shadow: none !important;
+            cursor: not-allowed !important;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .doctor-profile-header { display: flex; gap: 25px; align-items: center; }
+        .doc-avatar-frame { width: 100px; height: 100px; background: #0b0d14; border-radius: 24px; border: 2px solid var(--brand-cyan); overflow: hidden; }
+        .doc-avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .doc-info-block h2 { font-size: 24px; color: var(--text-pure); font-weight: 800; }
+        .doc-spec-badge { background: rgba(0, 180, 216, 0.1); color: var(--brand-cyan); padding: 5px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; display: inline-block; margin-top: 6px; }
+        
+        .services-flex { display: flex; flex-wrap: wrap; gap: 10px; }
+        .chip { background: var(--bg-surface-light); padding: 10px 16px; border-radius: 12px; font-size: 13px; color: #e2e8f0; display: flex; align-items: center; gap: 10px; }
+        .chip i { color: var(--brand-cyan); }
+
+        /* MULTI-PHOTO DYNAMIC RESPONSIVE GRID - IMAGE RESET APPLIED */
+        .machinery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .machine-item { 
+            background: var(--bg-deep); 
+            border-radius: 16px; 
+            aspect-ratio: 4 / 3; /* Fixed layout bounding box aspect ratio */
+            width: 100%;
+            overflow: hidden; 
+            position: relative; 
+            border: 1px solid rgba(255,255,255,0.04); 
+        }
+        .machine-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* High-contrast solid dark backdrop shield gradient overlay */
+        .machine-caption { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: linear-gradient(to top, rgba(11, 13, 20, 0.95) 0%, rgba(11, 13, 20, 0.7) 65%, transparent 100%); 
+            padding: 14px 16px; 
+            font-size: 12px; 
+            color: var(--text-pure); 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .machine-caption strong { display: block; font-size: 13px; color: var(--brand-cyan); margin-bottom: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.9); }
+
+        .meta-metrics-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .metric-mini-card { background: var(--bg-surface); padding: 20px; border-radius: 18px; text-align: center; border: 1px solid rgba(255,255,255,0.02); }
+        .metric-mini-card span { font-size: 11px; color: var(--text-muted); display: block; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+        .metric-mini-card strong { font-size: 14px; color: var(--text-pure); font-weight: 700; }
+        .full-width-metric { grid-column: span 2; }
+
+        /* ABOUT SECTION STYLES */
+        .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 35px; align-items: center; }
+        .about-image { width: 100%; height: 280px; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; }
+        .about-text h3 { font-size: 22px; color: var(--text-pure); margin-bottom: 12px; font-weight: 700; }
+        .about-text p { font-size: 14px; color: var(--text-body); line-height: 1.8; margin-bottom: 20px; }
+
+        /* ==========================================================================
+           6. MOBILE RESPONSIVE COHESION LAYER
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .hero-banner { height: 200px; margin: 15px; width: calc(100% - 30px); border-radius: 20px; }
+            .hero-content h1 { font-size: 22px; }
+            .hero-content { padding: 20px; }
+            .doctor-profile-header { flex-direction: column; text-align: center; }
+            
+            /* Responsive Grid stacking fix for standard mobile devices */
+            .machinery-grid { grid-template-columns: 1fr !important; gap: 16px; }
+            .meta-metrics-row { grid-template-columns: 1fr !important; gap: 12px; }
+            .full-width-metric { grid-column: span 1; }
+            
+            .about-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+            .about-image { width: 100% !important; height: 220px !important; }
+            .about-text { text-align: left; }
+            .about-text h3 { font-size: 20px !important; }
+            
+            .action-redirect-btn { width: 100%; justify-content: center; padding: 18px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="live-announcement-banner" class="clinic-status-banner status-open-banner">
+        <i class="fas fa-circle" style="font-size: 8px;"></i> Dr. Pradumn Agarwal Is Available Today (OPD Open)
+    </div>
+
+    <header>
+        <div class="nav-logo">
+            <div class="icon-wrap"><i class="fas fa-eye"></i></div>
+            <div class="logo-text">
+                <h2>Agarwal Eye Care Centre</h2>
+                <p>Digital Patient Portal</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-banner">
+        <img src="Main.jpg" alt="Clinic Exterior">
+        <div class="hero-content">
+            <h1>Agarwal Eye Care Centre</h1>
+            <p><i class="fas fa-map-marker-alt"></i> K Block, Kidwai Nagar, Kanpur, Uttar Pradesh</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        
+        <div class="redirect-btn-container">
+            <a href="appointment.html" id="main-booking-trigger" class="action-redirect-btn">
+                <i class="fas fa-calendar-alt"></i> Book Appointment — Click Here
+            </a>
+        </div>
+
+        <div class="glass-card">
+            <div class="doctor-profile-header">
+                <div class="doc-avatar-frame">
+                    <img src="Logo.jpg" alt="Dr. Pradumn Agarwal">
+                </div>
+                <div class="doc-info-block">
+                    <h2>Dr. Pradumn Agarwal</h2>
+                    <span class="doc-spec-badge"><i class="fas fa-user-md"></i> Senior Ophthalmologist & Eye Surgeon</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-title"><i class="fas fa-address-card"></i> About Doctor & Clinic Legacy</div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="Main.jpg" alt="Doctor Consultation">
+                </div>
+                <div class="about-text">
+                    <h3>Over 15+ Years of Clinical Excellence</h3>
+                    <p>
+                        Dr. Pradumn Agarwal is a highly respected Senior Eye Surgeon in Kanpur, specializing in micro-incision cataract surgeries and advanced laser vision corrections. Founded with a vision to deliver world-class eye care locally, Agarwal Eye Care Centre has successfully treated thousands of patients using precision computerized technologies.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SYMMETRIC TIMING & FEES CARDS MAP -->
+        <div class="meta-metrics-row">
+            <div class="metric-mini-card">
+                <span>(Main branch) OPD TIMINGS</span>
+                <strong>10:30 AM - 02:00 PM</strong>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">K Block Kidwai Nagar Center</p>
+            </div>
+            <div class="metric-mini-card">
+                <span>(Second branch) OPD TIMINGS</span>
+                <strong>06:00 PM - 08:00 PM</strong>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Marble Market Kidwai Nagar Center</p>
+            </div>
+            <div class="metric-mini-card full-width-metric">
+                <span>CONSULTATION FEE</span>
+                <strong style="color: var(--neon-green); font-size: 16px;">Rs. 500 Only</strong>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-title"><i class="fas fa-stethoscope"></i> Core Medical Services</div>
+            <div class="services-flex">
+                <div class="chip"><i class="fas fa-check-circle"></i> Eye Itching Treatment</div>
+                <div class="chip"><i class="fas fa-check-circle"></i> Watery Eyes Diagnostics</div>
+                <div class="chip"><i class="fas fa-check-circle"></i> Low Vision Core Alignment</div>
+                <div class="chip"><i class="fas fa-check-circle"></i> Advanced Lasik Surgery</div>
+                <div class="chip"><i class="fas fa-check-circle"></i> Contact Lens Prescriptions</div>
+            </div>
+        </div>
+
+        <!-- INFRASTRUCTURE GRID WITH COMPACT RESPONSIVE RATIO ALIGNMENT -->
+        <div class="glass-card">
+            <div class="card-title"><i class="fas fa-microscope"></i> Advanced Infrastructure Inside Clinic</div>
+            <div class="machinery-grid">
+                
+                <!-- Photo 1: Ghar.jpg -->
+                <div class="machine-item">
+                    <img src="Ghar.jpg" alt="Clinic Center">
+                    <div class="machine-caption">
+                        <strong>Agarwal Eye Care Centre</strong>
+                        <p style="font-size: 10px; opacity: 0.8;">Kidwai Nagar, Kanpur ka premium clinical eye terminal hub center.</p>
+                    </div>
+                </div>
+                
+                <!-- Photo 2: Machine.jpg -->
+                <div class="machine-item">
+                    <img src="Machine.jpg" alt="Clinical Diagnostics">
+                    <div class="machine-caption">
+                        <strong>Clinical Screening</strong>
+                        <p style="font-size: 10px; opacity: 0.8;">Advanced optical equipment panel se accurate live eye testing framework.</p>
+                    </div>
+                </div>
+
+                <!-- Photo 3: Machine2.jpg -->
+                <div class="machine-item">
+                    <img src="Machine2.jpg" alt="NCT Testing">
+                    <div class="machine-caption">
+                        <strong>Rexxam NCT-200</strong>
+                        <p style="font-size: 10px; opacity: 0.8;">Bina aankh touch kiye soft air-puff se accurate pressure monitoring system.</p>
+                    </div>
+                </div>
+
+                <!-- Photo 4: Machine3.jpg -->
+                <div class="machine-item">
+                    <img src="Machine3.jpg" alt="Optical Biometer">
+                    <div class="machine-caption">
+                        <strong>Tomey Optical Biometer</strong>
+                        <p style="font-size: 10px; opacity: 0.8;">Motiyabind lens measurement ke liye computerized 100% laser precision accuracy.</p>
+                    </div>
+                </div>
+
+                <!-- Photo 5: Machine4.jpg -->
+                <div class="machine-item">
+                    <img src="Machine4.jpg" alt="Refractometer Area">
+                    <div class="machine-caption">
+                        <strong>Auto-Refractometer</strong>
+                        <p style="font-size: 10px; opacity: 0.8;">Computerized chashme ke sateek number ki jaanch aur lens grading analysis.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const banner = document.getElementById("live-announcement-banner");
+            const bookBtn = document.getElementById("main-booking-trigger");
+
+            setInterval(() => {
+                const currentStatus = localStorage.getItem("doctorClinicStatus");
+                
+                if(currentStatus === "CLOSED") {
+                    banner.className = "clinic-status-banner status-closed-banner";
+                    banner.innerHTML = `<i class="fas fa-times-circle"></i> NOTICE: Dr. Pradumn Agarwal Is UNAVAILABLE Today (Clinic Closed)`;
+                    
+                    bookBtn.className = "action-redirect-btn disabled-btn";
+                    bookBtn.innerHTML = `<i class="fas fa-lock"></i> Appointments Closed For Today`;
+                } else {
+                    banner.className = "clinic-status-banner status-open-banner";
+                    banner.innerHTML = `<i class="fas fa-circle" style="font-size: 8px;"></i> Dr. Pradumn Agarwal Is Available Today (OPD Open)`;
+                    
+                    bookBtn.className = "action-redirect-btn";
+                    bookBtn.innerHTML = `<i class="fas fa-calendar-alt"></i> Book Appointment — Click Here`;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
